@@ -1,4 +1,3 @@
-from flet import *
 import flet as ft
 
 from services.OrderService import OrderService
@@ -7,6 +6,7 @@ from view.ROUTES import ADMIN, LOGIN
 
 
 def home_page(page: ft.Page):
+    page.title = 'Home'
     userService = UserService()
     orderService = OrderService()
 
