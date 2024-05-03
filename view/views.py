@@ -4,6 +4,8 @@ from view.ROUTES import *
 from view.pages.LoginPage import login_page
 from view.pages.HomePage import home_page
 from view.pages.AdminPage import admin_page
+from view.pages.AdminUsersPage import admin_users_page
+from view.pages.CreateUser import admin_createuser_page
 
 
 def views_handler(page: ft.Page):
@@ -20,5 +22,17 @@ def views_handler(page: ft.Page):
     d[ADMIN] = ft.View(
         route=ADMIN,
         controls=admin_page(page),
+    )
+    d[ADMIN_USERS] = ft.View(
+        route=ADMIN_USERS,
+        controls=admin_users_page(page),
+    )
+    d[ADMIN_USERS_CREATE] = ft.View(
+        route=ADMIN_USERS_CREATE,
+        controls=admin_createuser_page(page)
+    )
+    d[ADMIN_USERS_CREATE + ":.*"] = ft.View(
+        route=ADMIN_USERS_CREATE,
+        controls=admin_createuser_page(page)
     )
     return d
