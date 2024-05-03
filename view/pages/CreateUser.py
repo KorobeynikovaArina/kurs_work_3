@@ -6,7 +6,6 @@ from view.ROUTES import ADMIN, ADMIN_USERS, ADMIN_USERS_CREATE, HOME, LOGIN
 
 
 def admin_createuser_page(page: ft.Page):
-    page.title = 'Create user'
     userService = UserService()
     troute = ft.TemplateRoute(page.route)
     is_update = False

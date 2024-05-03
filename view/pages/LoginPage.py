@@ -5,7 +5,6 @@ from view.ROUTES import HOME
 
 
 def login_page(page: ft.Page):
-    page.title = 'Login'
     userService = UserService()
 
     def login(e):

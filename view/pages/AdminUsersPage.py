@@ -5,7 +5,6 @@ from view.ROUTES import ADMIN, ADMIN_USERS_CREATE, HOME, LOGIN
 
 
 def admin_users_page(page: ft.Page):
-    page.title = 'Users'
     userService = UserService()
 
     def logout(e):

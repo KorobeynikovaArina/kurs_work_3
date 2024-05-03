@@ -6,7 +6,7 @@ from view.ROUTES import ADMIN, LOGIN
 
 
 def home_page(page: ft.Page):
-    page.title = 'Home'
+    page.title = 'Издательство'
     userService = UserService()
     orderService = OrderService()
 
