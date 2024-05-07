@@ -18,71 +18,78 @@ def admin_page(page: ft.Page):
     logoutbtn = ft.TextButton(text='Logout', on_click=logout)
     homebtn = ft.TextButton(
         text="Home", on_click=lambda e: page.go(HOME))
-    return [ft.Row([logoutbtn, homebtn]), ft.Row([
-        ft.Card(
-            content=ft.Container(
-                content=ft.Column(
-                    [
-                        ft.ListTile(
-                            leading=ft.Icon(ft.icons.MANAGE_ACCOUNTS),
-                            title=ft.Text("Users"),
-                            subtitle=ft.Text(
-                                "Do smth with users"
-                            ),
+
+    users_card = ft.Card(
+        content=ft.Container(
+            content=ft.Column(
+                [
+                    ft.ListTile(
+                        leading=ft.Icon(ft.icons.MANAGE_ACCOUNTS),
+                        title=ft.Text("Users"),
+                        subtitle=ft.Text(
+                            "Do smth with users"
                         ),
-                        ft.Row(
-                            [ft.TextButton(
-                                "Go", on_click=lambda e: page.go(ADMIN_USERS))],
-                            alignment=ft.MainAxisAlignment.END,
-                        ),
-                    ]
-                ),
-                width=400,
-                padding=10,
-            )
-        ),
-        ft.Card(
-            content=ft.Container(
-                content=ft.Column(
-                    [
-                        ft.ListTile(
-                            leading=ft.Icon(ft.icons.LIST),
-                            title=ft.Text("Statuses"),
-                            subtitle=ft.Text(
-                                "Do smth with statuses"
-                            ),
-                        ),
-                        ft.Row(
-                            [ft.TextButton(
-                                "Go", on_click=lambda e: page.go(ADMIN_STATUS))],
-                            alignment=ft.MainAxisAlignment.END,
-                        ),
-                    ]
-                ),
-                width=400,
-                padding=10,
-            )
-        ),
-        ft.Card(
-            content=ft.Container(
-                content=ft.Column(
-                    [
-                        ft.ListTile(
-                            leading=ft.Icon(ft.icons.SUPERVISOR_ACCOUNT),
-                            title=ft.Text("Client Types"),
-                            subtitle=ft.Text(
-                                "Do smth with types of clients"
-                            ),
-                        ),
-                        ft.Row(
-                            [ft.TextButton(
-                                "Go", on_click=lambda e: page.go(ADMIN_CLIENTTYPE))],
-                            alignment=ft.MainAxisAlignment.END,
-                        ),
-                    ]
-                ),
-                width=400,
-                padding=10,
-            )
+                    ),
+                    ft.Row(
+                        [ft.TextButton(
+                            "Go", on_click=lambda e: page.go(ADMIN_USERS))],
+                        alignment=ft.MainAxisAlignment.END,
+                    ),
+                ]
+            ),
+            width=400,
+            padding=10,
+            on_click=lambda e: page.go(ADMIN_USERS),
         )
+    )
+    statuses_card = ft.Card(
+        content=ft.Container(
+            content=ft.Column(
+                [
+                    ft.ListTile(
+                        leading=ft.Icon(ft.icons.LIST),
+                        title=ft.Text("Statuses"),
+                        subtitle=ft.Text(
+                            "Do smth with statuses"
+                        ),
+                    ),
+                    ft.Row(
+                        [ft.TextButton(
+                            "Go", on_click=lambda e: page.go(ADMIN_STATUS))],
+                        alignment=ft.MainAxisAlignment.END,
+                    ),
+                ]
+            ),
+            width=400,
+            padding=10,
+            on_click=lambda e: page.go(ADMIN_STATUS),
+        )
+    )
+    client_type_card = ft.Card(
+        content=ft.Container(
+            content=ft.Column(
+                [
+                    ft.ListTile(
+                        leading=ft.Icon(ft.icons.SUPERVISOR_ACCOUNT),
+                        title=ft.Text("Client Types"),
+                        subtitle=ft.Text(
+                            "Do smth with types of clients"
+                        ),
+                    ),
+                    ft.Row(
+                        [ft.TextButton(
+                            "Go", on_click=lambda e: page.go(ADMIN_CLIENTTYPE))],
+                        alignment=ft.MainAxisAlignment.END,
+                    ),
+                ]
+            ),
+            width=400,
+            padding=10,
+            on_click=lambda e: page.go(ADMIN_CLIENTTYPE)
+        )
+    )
+    return [ft.Row([logoutbtn, homebtn]), ft.Row([
+        users_card,
+        statuses_card,
+        client_type_card,
     ])]
