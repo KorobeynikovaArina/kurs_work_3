@@ -17,4 +17,7 @@ class StatusService():
         status.delete_instance(recursive=True)
 
     def get_all(self):
-       return [status for status in self.StatusModel.select()]
+        return [status for status in self.StatusModel.select()]
+
+    def get_by_id(self, id: int):
+        return self.StatusModel.get_by_id(id)
