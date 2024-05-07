@@ -1,4 +1,3 @@
-from flet import *
 import flet as ft
 
 from services.OrderService import OrderService

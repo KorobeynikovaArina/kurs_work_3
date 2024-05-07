@@ -1,14 +1,13 @@
-from flet import *
 import flet as ft
 import jwt
 
 from services.UserService import UserService
-from view.ROUTES import ADMIN, ADMIN_USERS_CREATE, HOME, LOGIN
+from view.ROUTES import ADMIN, ADMIN_USERS, ADMIN_USERS_CREATE, HOME, LOGIN
 
 
 def admin_createuser_page(page: ft.Page):
     userService = UserService()
-    troute = TemplateRoute(page.route)
+    troute = ft.TemplateRoute(page.route)
     is_update = False
     default_values = {
         "id": "",
@@ -72,7 +71,9 @@ def admin_createuser_page(page: ft.Page):
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
 
-    return [ft.Row([logoutbtn, homebtn, adminbtn]),
+    usersbtn = ft.TextButton(
+        text="Users", on_click=lambda e: page.go(ADMIN_USERS))
+    return [ft.Row([logoutbtn, homebtn, adminbtn, usersbtn]),
             username,
             name,
             password,
