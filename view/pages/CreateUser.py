@@ -55,7 +55,7 @@ def admin_createuser_page(page: ft.Page):
 
     username = ft.TextField(hint_text='Username',
                             autofocus=True, value=default_values['username'])
-    name = ft.TextField(hint_text='Username',
+    name = ft.TextField(hint_text='Name',
                         autofocus=True, value=default_values['name'])
     password = ft.TextField(hint_text='Password' if not is_update else "New password",
                             password=True, value=default_values['password'])
