@@ -8,6 +8,8 @@ from view.pages.HomePage import home_page
 from view.pages.AdminPage import admin_page
 from view.pages.AdminUsersPage import admin_users_page
 from view.pages.CreateUser import admin_createuser_page
+from view.pages.AdminClientTypePage import admin_clienttype_page
+from view.pages.CreateClientType import admin_clienttype_create
 
 
 def views_handler(page: ft.Page):
@@ -45,8 +47,20 @@ def views_handler(page: ft.Page):
         route=ADMIN_STATUS_CREATE,
         controls=admin_status_create(page)
     )
-    d[ADMIN_STATUS_CREATE+"/.*"] = ft.View(
+    d[ADMIN_STATUS_CREATE + "/.*"] = ft.View(
         route=ADMIN_STATUS_CREATE,
         controls=admin_status_create(page)
+    )
+    d[ADMIN_CLIENTTYPE] = ft.View(
+        route=ADMIN_CLIENTTYPE,
+        controls=admin_clienttype_page(page)
+    )
+    d[ADMIN_CLIENTTYPE_CREATE] = ft.View(
+        route=ADMIN_CLIENTTYPE_CREATE,
+        controls=admin_clienttype_create(page)
+    )
+    d[ADMIN_CLIENTTYPE_CREATE + "/.*"] = ft.View(
+        route=ADMIN_CLIENTTYPE_CREATE,
+        controls=admin_clienttype_create(page)
     )
     return d

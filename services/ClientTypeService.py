@@ -18,3 +18,6 @@ class ClientTypeService():
 
     def get_all(self):
         return [client_type for client_type in self.ClientTypeModel.select()]
+
+    def get_by_id(self, id: int):
+        return self.ClientTypeModel.get_by_id(id)
