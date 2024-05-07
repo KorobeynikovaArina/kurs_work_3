@@ -16,8 +16,8 @@ def admin_users_page(page: ft.Page):
     logoutbtn = ft.TextButton(text='Logout', on_click=logout)
     homebtn = ft.TextButton(
         text="Home", on_click=lambda e: page.go(HOME))
-    createbtn = ft.TextButton(
-        text="Create user", on_click=lambda e: page.go(ADMIN_USERS_CREATE))
+    createbtn = ft.OutlinedButton(
+        text="Create user", on_click=lambda e: page.go(ADMIN_USERS_CREATE), icon=ft.icons.ADD, icon_color=ft.colors.GREEN_400)
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
 
