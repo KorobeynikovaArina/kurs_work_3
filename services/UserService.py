@@ -48,7 +48,7 @@ class UserService():
             user[self.UserModel.password] = hash_password
         if name:
             user[self.UserModel.name] = name
-        if rule:
+        if rule is not None:
             user[self.UserModel.rule] = rule
 
         self.UserModel.update(user).where(self.UserModel.id == id).execute()
@@ -71,7 +71,10 @@ class UserService():
 
     def logout(self, token):
         decode_token = jwt.decode(token, SECRET, algorithms=["HS256"])
-        user: User = self.UserModel.get(username=decode_token['username'])
+        user: User = self.UserModel.get_or_none(
+            username=decode_token['username'])
+        if not user:
+            return
         user.token = ''
         user.save()
 
@@ -91,6 +94,13 @@ class UserService():
 
     def get_by_id(self, id: int):
         return self.UserModel.get_by_id(id)
+
+    def get_user_by_token(self, token):
+        if not token:
+            return False
+        decode_token = jwt.decode(token, SECRET, algorithms=["HS256"])
+        user: User = self.UserModel.get(username=decode_token['username'])
+        return user
 
     def _get_hashed_password(self, password: str):
         return password
