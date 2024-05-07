@@ -3,7 +3,7 @@ import flet as ft
 
 from services.OrderService import OrderService
 from services.UserService import UserService
-from view.ROUTES import ADMIN_USERS, HOME, LOGIN
+from view.ROUTES import ADMIN_USERS, HOME, LOGIN, ADMIN_STATUS, ADMIN_CLIENTTYPE
 
 
 def admin_page(page: ft.Page):
@@ -34,6 +34,50 @@ def admin_page(page: ft.Page):
                         ft.Row(
                             [ft.TextButton(
                                 "Go", on_click=lambda e: page.go(ADMIN_USERS))],
+                            alignment=ft.MainAxisAlignment.END,
+                        ),
+                    ]
+                ),
+                width=400,
+                padding=10,
+            )
+        ),
+        ft.Card(
+            content=ft.Container(
+                content=ft.Column(
+                    [
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.LIST),
+                            title=ft.Text("Statuses"),
+                            subtitle=ft.Text(
+                                "Do smth with statuses"
+                            ),
+                        ),
+                        ft.Row(
+                            [ft.TextButton(
+                                "Go", on_click=lambda e: page.go(ADMIN_STATUS))],
+                            alignment=ft.MainAxisAlignment.END,
+                        ),
+                    ]
+                ),
+                width=400,
+                padding=10,
+            )
+        ),
+        ft.Card(
+            content=ft.Container(
+                content=ft.Column(
+                    [
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.SUPERVISOR_ACCOUNT),
+                            title=ft.Text("Client Types"),
+                            subtitle=ft.Text(
+                                "Do smth with types of clients"
+                            ),
+                        ),
+                        ft.Row(
+                            [ft.TextButton(
+                                "Go", on_click=lambda e: page.go(ADMIN_CLIENTTYPE))],
                             alignment=ft.MainAxisAlignment.END,
                         ),
                     ]
