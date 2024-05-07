@@ -45,10 +45,6 @@ def views_handler(page: ft.Page):
         route=ADMIN_STATUS_CREATE,
         controls=admin_status_create(page)
     )
-    d[ADMIN_STATUS] = ft.View(
-        route=ADMIN_STATUS,
-        controls=admin_status_page(page)
-    )
     d[ADMIN_STATUS_CREATE+"/.*"] = ft.View(
         route=ADMIN_STATUS_CREATE,
         controls=admin_status_create(page)

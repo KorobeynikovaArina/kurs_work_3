@@ -30,8 +30,13 @@ def admin_status_create(page: ft.Page):
         page.client_storage.remove('token')
         page.go(LOGIN)
 
+    def on_submit(e):
+        if is_update:
+            return update_status(e)
+        return create_status(e)
+
     status = ft.TextField(hint_text='Title',
-                          autofocus=True, value=default_values['title'])
+                          autofocus=True, on_submit=on_submit, value=default_values['title'])
     create_btn = ft.TextButton(
         text='Create', on_click=create_status, visible=not is_update)
     update_btn = ft.TextButton(
