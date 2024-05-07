@@ -1,4 +1,5 @@
 import flet as ft
+import jwt
 
 from services.OrderService import OrderService
 from services.UserService import UserService
@@ -10,18 +11,23 @@ def home_page(page: ft.Page):
     userService = UserService()
     orderService = OrderService()
 
+    token = page.client_storage.get('token')
+
     def logout(e):
         token = page.client_storage.get('token')
         userService.logout(token)
         page.client_storage.remove('token')
 
         page.go(LOGIN)
-
+    # current_user = userService.get_user_by_token(token)
     orders = orderService.get_all()
 
-    token = page.client_storage.get('token')
     tokentxt = ft.Text(token)
-    is_admin = userService.is_admin(token)
+    try:
+        is_admin = userService.is_admin(token)
+    except userService.UserModel.DoesNotExist as e:
+        return logout("")
+
     rule = ft.Text(('meneger', 'admin')[is_admin])
     logoutbtn = ft.TextButton(text='Logout', on_click=logout)
     admin_panel = ft.TextButton(
