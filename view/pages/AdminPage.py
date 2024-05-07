@@ -2,7 +2,7 @@ import flet as ft
 
 from services.OrderService import OrderService
 from services.UserService import UserService
-from view.ROUTES import ADMIN_STATUS, ADMIN_USERS, HOME, LOGIN
+from view.ROUTES import ADMIN_USERS, ADMIN_STATUS, HOME, LOGIN
 
 
 def admin_page(page: ft.Page):
@@ -46,7 +46,7 @@ def admin_page(page: ft.Page):
                 content=ft.Column(
                     [
                         ft.ListTile(
-                            leading=ft.Icon(ft.icons.MANAGE_ACCOUNTS),
+                            leading=ft.Icon(ft.icons.LIST),
                             title=ft.Text("Statuses"),
                             subtitle=ft.Text(
                                 "Do smth with statuses"
