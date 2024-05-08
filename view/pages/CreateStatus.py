@@ -48,7 +48,10 @@ def admin_status_create(page: ft.Page):
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
 
-    return [ft.Row([logoutbtn, homebtn, adminbtn]),
+    statusesbtn = ft.TextButton(
+        text="Statuses", on_click=lambda e: page.go(ADMIN_STATUS))
+
+    return [ft.Row([logoutbtn, homebtn, adminbtn, statusesbtn]),
             status,
             create_btn,
             update_btn]

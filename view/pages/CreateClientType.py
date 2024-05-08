@@ -47,8 +47,10 @@ def admin_clienttype_create(page: ft.Page):
         text="Home", on_click=lambda e: page.go(HOME))
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
+    clienttypesbtn = ft.TextButton(
+        text="Client Types", on_click=lambda e: page.go(ADMIN_CLIENTTYPE))
 
-    return [ft.Row([logoutbtn, homebtn, adminbtn]),
+    return [ft.Row([logoutbtn, homebtn, adminbtn, clienttypesbtn]),
             client_type,
             create_btn,
             update_btn]
