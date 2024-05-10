@@ -12,6 +12,10 @@ def admin_users_page(page: ft.Page):
         page.go(LOGIN)
 
     users = userService.get_all()
+    current_user = userService.get_user_by_token(
+        page.client_storage.get('token'))
+    if not current_user:
+        return
 
     logoutbtn = ft.TextButton(text='Logout', on_click=logout)
     homebtn = ft.TextButton(
@@ -26,28 +30,36 @@ def admin_users_page(page: ft.Page):
 
     def on_delete(e):
         userService.delete(e.control.data)
+        for row in table.rows:
+            if row.data == e.control.data:
+                table.rows.remove(row)
+                page.update()
+                return
 
-    return [ft.Row([logoutbtn, homebtn, adminbtn, createbtn]),
-            ft.DataTable(
-            columns=[
-                ft.DataColumn(ft.Text("Username")),
-                ft.DataColumn(ft.Text("Name")),
-                ft.DataColumn(ft.Text("Rule"), numeric=True),
-                ft.DataColumn(ft.Text("Update")),
-                ft.DataColumn(ft.Text("Delete"))
-            ],
-            rows=[
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text(user.username)),
-                        ft.DataCell(ft.Text(user.name)),
-                        ft.DataCell(ft.Text(user.rule)),
-                        ft.DataCell(ft.IconButton(
-                            ft.icons.EDIT, ft.colors.GREEN, on_click=go_edit, data=user.id)),
-                        ft.DataCell(ft.IconButton(
-                            ft.icons.DELETE, ft.colors.RED, on_click=on_delete, data=user.id)),
-                    ],
-                ) for user in users
-            ],
+    table = ft.DataTable(
+        columns=[
+            ft.DataColumn(ft.Text("Username")),
+            ft.DataColumn(ft.Text("Name")),
+            ft.DataColumn(ft.Text("Rule"), numeric=True),
+            ft.DataColumn(ft.Text("Update")),
+            ft.DataColumn(ft.Text("Delete"))
+        ],
+        rows=[
+            ft.DataRow(
+                color=ft.colors.BLUE_100 if user.id == current_user.id else None,
+                cells=[
+                    ft.DataCell(ft.Text(user.username)),
+                    ft.DataCell(ft.Text(user.name)),
+                    ft.DataCell(ft.Text(user.rule)),
+                    ft.DataCell(ft.IconButton(
+                        ft.icons.EDIT, ft.colors.GREEN, on_click=go_edit, data=user.id)),
+                    ft.DataCell(ft.IconButton(
+                        ft.icons.DELETE, ft.colors.GREY if user.id == current_user.id else ft.colors.RED, on_click=on_delete, data=user.id, disabled=user.id == current_user.id)),
+                ],
+                data=user.id,
+            ) for user in users
+        ],
 
-            ),]
+    )
+
+    return [ft.Row([logoutbtn, homebtn, adminbtn, createbtn]), table]
