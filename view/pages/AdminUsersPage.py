@@ -24,13 +24,17 @@ def admin_users_page(page: ft.Page):
     def go_edit(e):
         page.go(ADMIN_USERS_CREATE+f"/:{e.control.data}")
 
+    def on_delete(e):
+        userService.delete(e.control.data)
+
     return [ft.Row([logoutbtn, homebtn, adminbtn, createbtn]),
             ft.DataTable(
             columns=[
                 ft.DataColumn(ft.Text("Username")),
                 ft.DataColumn(ft.Text("Name")),
                 ft.DataColumn(ft.Text("Rule"), numeric=True),
-                ft.DataColumn(ft.Text("Do"))
+                ft.DataColumn(ft.Text("Update")),
+                ft.DataColumn(ft.Text("Delete"))
             ],
             rows=[
                 ft.DataRow(
@@ -38,8 +42,10 @@ def admin_users_page(page: ft.Page):
                         ft.DataCell(ft.Text(user.username)),
                         ft.DataCell(ft.Text(user.name)),
                         ft.DataCell(ft.Text(user.rule)),
-                        ft.DataCell(ft.IconButton(ft.icons.EDIT,
-                                    ft.colors.GREEN, on_click=go_edit, data=user.id)),
+                        ft.DataCell(ft.IconButton(
+                            ft.icons.EDIT, ft.colors.GREEN, on_click=go_edit, data=user.id)),
+                        ft.DataCell(ft.IconButton(
+                            ft.icons.DELETE, ft.colors.RED, on_click=on_delete, data=user.id)),
                     ],
                 ) for user in users
             ],
