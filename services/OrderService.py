@@ -12,13 +12,13 @@ class OrderService():
         return self.OrderModel.create(client=client, client_type=client_type, contact=contact, product_type=product_type, material_filepath=material_filepath, user=user, status=status)
 
     def update(self, id: int, *args, **kwargs):
-        client = kwargs.get('client', None)
-        client_type = kwargs.get('client_type', None)
-        contact = kwargs.get('contact', None)
-        product_type = kwargs.get('product_type', None)
-        material_filepatht = kwargs.get('material_filepatht', None)
-        user = kwargs.get('user', None)
-        status = kwargs.get('status', None)
+        client = kwargs.get("client", None)
+        client_type = kwargs.get("client_type", None)
+        contact = kwargs.get("contact", None)
+        product_type = kwargs.get("product_type", None)
+        material_filepatht = kwargs.get("material_filepatht", None)
+        user = kwargs.get("user", None)
+        status = kwargs.get("status", None)
 
         order = {}
 

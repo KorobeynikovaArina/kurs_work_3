@@ -7,5 +7,4 @@ class User(BaseModel):
     password = CharField()
     name = CharField()
     token = CharField(default="")
-    # 0 - meneger, 1 - admin
-    rule = IntegerField()
+    rule = IntegerField()  # 0 - meneger, 1 - admin

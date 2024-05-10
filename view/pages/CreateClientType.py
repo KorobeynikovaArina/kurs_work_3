@@ -8,26 +8,26 @@ def admin_clienttype_create(page: ft.Page):
     troute = ft.TemplateRoute(page.route)
     is_update = False
     default_values = {"id": "", "title": ""}
+
     if troute.match(ADMIN_CLIENTTYPE_CREATE+"/:id"):
         is_update = True
         id = troute.id
         client_type = clienttypeService.get_by_id(id)
-        default_values['id'] = client_type.id
-        default_values['title'] = client_type.title
+        default_values["id"] = client_type.id
+        default_values["title"] = client_type.title
 
     def create_clienttype(e):
-        if client_type.value == '':
+        if client_type.value == "":
             return
-
         clienttypeService.create(client_type.value)
         page.go(ADMIN_CLIENTTYPE)
 
     def update_clienttype(e):
-        clienttypeService.update(default_values['id'], title=client_type.value)
+        clienttypeService.update(default_values["id"], title=client_type.value)
         page.go(ADMIN_CLIENTTYPE)
 
     def logout(e):
-        page.client_storage.remove('token')
+        page.client_storage.remove("token")
         page.go(LOGIN)
 
     def on_submit(e):
@@ -35,22 +35,19 @@ def admin_clienttype_create(page: ft.Page):
             return update_clienttype(e)
         return create_clienttype(e)
 
-    client_type = ft.TextField(hint_text='Title',
-                               autofocus=True, on_submit=on_submit, value=default_values['title'])
+    client_type = ft.TextField(hint_text="Title",
+                               autofocus=True, on_submit=on_submit, value=default_values["title"])
     create_btn = ft.TextButton(
-        text='Create', on_click=create_clienttype, visible=not is_update)
+        text="Create", on_click=create_clienttype, visible=not is_update)
     update_btn = ft.TextButton(
-        text='Update', on_click=update_clienttype, visible=is_update)
+        text="Update", on_click=update_clienttype, visible=is_update)
 
-    logoutbtn = ft.TextButton(text='Logout', on_click=logout)
+    logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
         text="Home", on_click=lambda e: page.go(HOME))
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
     clienttypesbtn = ft.TextButton(
         text="Client Types", on_click=lambda e: page.go(ADMIN_CLIENTTYPE))
-
-    return [ft.Row([logoutbtn, homebtn, adminbtn, clienttypesbtn]),
-            client_type,
-            create_btn,
-            update_btn]
+    navbar = ft.Row([logoutbtn, homebtn, adminbtn, clienttypesbtn])
+    return [navbar, client_type, create_btn, update_btn]

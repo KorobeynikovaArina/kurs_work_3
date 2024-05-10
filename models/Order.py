@@ -12,5 +12,5 @@ class Order(BaseModel):
     contact = CharField()
     product_type = CharField()
     material_filepath = CharField()
-    user = ForeignKeyField(User, backref='orders')
-    status = ForeignKeyField(Status, backref='orders')
+    user = ForeignKeyField(User, backref="orders")
+    status = ForeignKeyField(Status, backref="orders")

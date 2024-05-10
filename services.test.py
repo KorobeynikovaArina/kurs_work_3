@@ -32,7 +32,7 @@ def run_tests(fns):
 
 
 # Создание моковых моделей и сервисов, чтобы они работали с другой БД
-db = SqliteDatabase(':memory:')
+db = SqliteDatabase(":memory:")
 
 
 class Order(OrderOriginal):
@@ -84,15 +84,15 @@ class ClientTypeService(ClientTypeServiceOriginal):
 class TestUserService():
     def create_test(self):
         us = UserService()
-        u = us.create('misha1425', '1234', 'misha misha', 1)
-        if u.username == 'misha1425':
+        u = us.create("misha1425", "1234", "misha misha", 1)
+        if u.username == "misha1425":
             return True
 
     def create_existing_user(self):
         us = UserService()
-        us.create('misha1425', '1234', 'misha misha', 1)
+        us.create("misha1425", "1234", "misha misha", 1)
         try:
-            us.create('misha1425', '1234', 'misha misha', 1)
+            us.create("misha1425", "1234", "misha misha", 1)
             return False
         except UserAllreadyExist as e:
             return True
