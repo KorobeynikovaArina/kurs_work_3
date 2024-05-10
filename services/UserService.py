@@ -17,8 +17,8 @@ class UserService():
 
     def create(self, username, password, name, rule):
         hash_password = self._get_hashed_password(password)
-        eu = self.UserModel.get_or_none(self.UserModel.username == username)
-        if eu:
+        user = self.UserModel.get_or_none(self.UserModel.username == username)
+        if user:
             raise UserAllreadyExist()
         return self.UserModel.create(username=username, name=name, rule=rule, password=hash_password)
 
@@ -32,6 +32,8 @@ class UserService():
         """
         accept username, password, name, rule in kwargs
         e.g. update(username="nnnn"....)
+
+        raise UserAllreadyExist 
         """
         username = kwargs.get('username', None)
         password = kwargs.get('password', None)
@@ -41,7 +43,9 @@ class UserService():
         user = {}
 
         if username:
-            # check if username allready exist
+            u = self.UserModel.get_or_none(username=username)
+            if u and u.username == username:
+                raise UserAllreadyExist
             user[self.UserModel.username] = username
         if password:
             hash_password = self._get_hashed_password(password)
