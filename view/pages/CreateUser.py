@@ -1,7 +1,7 @@
 import flet as ft
 import jwt
 
-from services.UserService import UserService
+from services.UserService import UserAllreadyExist, UserService
 from view.ROUTES import ADMIN, ADMIN_USERS, ADMIN_USERS_CREATE, HOME, LOGIN
 
 
@@ -16,6 +16,8 @@ def admin_createuser_page(page: ft.Page):
         "password": "",
         "rule": False,
     }
+    text_status = ft.Text(value="", color="red")
+
     if troute.match(ADMIN_USERS_CREATE+"/:id"):
         is_update = True
         id = troute.id[1:]
@@ -28,9 +30,14 @@ def admin_createuser_page(page: ft.Page):
     def create_user(e):
         if username.value == '' or password.value == '' or name.value == '':
             return
+        try:
+            userService.create(username.value, password.value,
+                               name.value, rule.value)
+        except UserAllreadyExist as e:
+            text_status.value = "UserAllreadiExist"
+            page.update()
+            return
 
-        userService.create(username.value, password.value,
-                           name.value, rule.value)
         page.go(ADMIN)
 
     def update_user(e):
@@ -39,12 +46,17 @@ def admin_createuser_page(page: ft.Page):
 
         if decoded_token['username'] == default_values['username']:
             logout(e)
-        userService.update(default_values['id'], username=username.value,
-                           password=password.value,
-                           name=name.value,
-                           rule=rule.value)
+        try:
+            userService.update(default_values['id'], username=username.value,
+                               password=password.value,
+                               name=name.value,
+                               rule=rule.value)
+        except UserAllreadyExist as e:
+            text_status.value = "UserAlreadyExist"
+            page.update()
+            return
         if not decoded_token['username'] == default_values['username']:
-            page.go(ADMIN)
+            page.go(ADMIN_USERS)
 
     def logout(e):
         token = page.client_storage.get('token')
@@ -79,4 +91,4 @@ def admin_createuser_page(page: ft.Page):
             password,
             rule,
             create_btn,
-            update_btn]
+            update_btn, text_status]
