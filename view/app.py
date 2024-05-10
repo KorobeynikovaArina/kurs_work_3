@@ -16,7 +16,7 @@ def base_page(page: ft.Page):
         page.update()
 
     page.on_route_change = route_change
-    token = page.client_storage.get('token')
+    token = page.client_storage.get("token")
     if not token:
         page.go(LOGIN)
     else:

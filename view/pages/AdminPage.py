@@ -9,13 +9,13 @@ def admin_page(page: ft.Page):
     userService = UserService()
 
     def logout(e):
-        token = page.client_storage.get('token')
+        token = page.client_storage.get("token")
         userService.logout(token)
-        page.client_storage.remove('token')
+        page.client_storage.remove("token")
 
         page.go(LOGIN)
 
-    logoutbtn = ft.TextButton(text='Logout', on_click=logout)
+    logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
         text="Home", on_click=lambda e: page.go(HOME))
 
@@ -88,8 +88,9 @@ def admin_page(page: ft.Page):
             on_click=lambda e: page.go(ADMIN_CLIENTTYPE)
         )
     )
-    return [ft.Row([logoutbtn, homebtn]), ft.Row([
+    navbar = ft.Row([logoutbtn, homebtn])
+    cards = ft.Row([
         users_card,
         statuses_card,
-        client_type_card,
-    ])]
+        client_type_card])
+    return [navbar, cards]

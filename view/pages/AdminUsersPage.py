@@ -8,22 +8,8 @@ def admin_users_page(page: ft.Page):
     userService = UserService()
 
     def logout(e):
-        page.client_storage.remove('token')
+        page.client_storage.remove("token")
         page.go(LOGIN)
-
-    users = userService.get_all()
-    current_user = userService.get_user_by_token(
-        page.client_storage.get('token'))
-    if not current_user:
-        return
-
-    logoutbtn = ft.TextButton(text='Logout', on_click=logout)
-    homebtn = ft.TextButton(
-        text="Home", on_click=lambda e: page.go(HOME))
-    createbtn = ft.OutlinedButton(
-        text="Create user", on_click=lambda e: page.go(ADMIN_USERS_CREATE), icon=ft.icons.ADD, icon_color=ft.colors.GREEN_400)
-    adminbtn = ft.TextButton(
-        text="Admin panel", on_click=lambda e: page.go(ADMIN))
 
     def go_edit(e):
         page.go(ADMIN_USERS_CREATE+f"/:{e.control.data}")
@@ -35,6 +21,21 @@ def admin_users_page(page: ft.Page):
                 table.rows.remove(row)
                 page.update()
                 return
+
+    users = userService.get_all()
+
+    current_user = userService.get_user_by_token(
+        page.client_storage.get("token"))
+    if not current_user:
+        return
+
+    logoutbtn = ft.TextButton(text="Logout", on_click=logout)
+    homebtn = ft.TextButton(
+        text="Home", on_click=lambda e: page.go(HOME))
+    createbtn = ft.OutlinedButton(
+        text="Create user", on_click=lambda e: page.go(ADMIN_USERS_CREATE), icon=ft.icons.ADD, icon_color=ft.colors.GREEN_400)
+    adminbtn = ft.TextButton(
+        text="Admin panel", on_click=lambda e: page.go(ADMIN))
 
     table = ft.DataTable(
         columns=[
@@ -61,5 +62,5 @@ def admin_users_page(page: ft.Page):
         ],
 
     )
-
-    return [ft.Row([logoutbtn, homebtn, adminbtn, createbtn]), table]
+    navbar = ft.Row([logoutbtn, homebtn, adminbtn, createbtn])
+    return [navbar, table]

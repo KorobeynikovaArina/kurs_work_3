@@ -7,19 +7,19 @@ from view.ROUTES import ADMIN, LOGIN
 
 
 def home_page(page: ft.Page):
-    page.title = 'Издательство'
+    page.title = "Издательство"
     userService = UserService()
     orderService = OrderService()
 
-    token = page.client_storage.get('token')
+    token = page.client_storage.get("token")
 
     def logout(e):
-        token = page.client_storage.get('token')
+        token = page.client_storage.get("token")
         userService.logout(token)
-        page.client_storage.remove('token')
+        page.client_storage.remove("token")
 
         page.go(LOGIN)
-    # current_user = userService.get_user_by_token(token)
+
     orders = orderService.get_all()
 
     tokentxt = ft.Text(token)
@@ -28,33 +28,34 @@ def home_page(page: ft.Page):
     except userService.UserModel.DoesNotExist as e:
         return logout("")
 
-    rule = ft.Text(('meneger', 'admin')[is_admin])
-    logoutbtn = ft.TextButton(text='Logout', on_click=logout)
+    rule = ft.Text(("meneger", "admin")[is_admin])
+    logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     admin_panel = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN), visible=is_admin)
-    return [ft.Row([logoutbtn, admin_panel]), tokentxt, rule,
-            ft.DataTable(
-            columns=[
-                ft.DataColumn(ft.Text("client")),
-                ft.DataColumn(ft.Text("client_type")),
-                ft.DataColumn(ft.Text("contact")),
-                ft.DataColumn(ft.Text("product_type")),
-                ft.DataColumn(ft.Text("material_filepath")),
-                ft.DataColumn(ft.Text("user")),
-                ft.DataColumn(ft.Text("status")),
-            ],
-            rows=[
-                ft.DataRow(
-                    cells=[
-                        ft.DataCell(ft.Text(order.client)),
-                        ft.DataCell(ft.Text(order.client_type)),
-                        ft.DataCell(ft.Text(order.contact)),
-                        ft.DataCell(ft.Text(order.product_type)),
-                        ft.DataCell(ft.Text(order.material_filepath)),
-                        ft.DataCell(ft.Text(order.user)),
-                        ft.DataCell(ft.Text(order.status)),
-                    ],
-                ) for order in orders
-            ],
-            ),
-            ]
+
+    table = ft.DataTable(
+        columns=[
+            ft.DataColumn(ft.Text("client")),
+            ft.DataColumn(ft.Text("client_type")),
+            ft.DataColumn(ft.Text("contact")),
+            ft.DataColumn(ft.Text("product_type")),
+            ft.DataColumn(ft.Text("material_filepath")),
+            ft.DataColumn(ft.Text("user")),
+            ft.DataColumn(ft.Text("status")),
+        ],
+        rows=[
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.Text(order.client)),
+                    ft.DataCell(ft.Text(order.client_type)),
+                    ft.DataCell(ft.Text(order.contact)),
+                    ft.DataCell(ft.Text(order.product_type)),
+                    ft.DataCell(ft.Text(order.material_filepath)),
+                    ft.DataCell(ft.Text(order.user)),
+                    ft.DataCell(ft.Text(order.status)),
+                ],
+            ) for order in orders
+        ],
+    )
+    navbar = ft.Row([logoutbtn, admin_panel])
+    return [navbar, tokentxt, rule, table]

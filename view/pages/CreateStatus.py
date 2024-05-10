@@ -12,37 +12,32 @@ def admin_status_create(page: ft.Page):
         is_update = True
         id = troute.id
         status = statusService.get_by_id(id)
-        default_values['id'] = status.id
-        default_values['title'] = status.title
+        default_values["id"] = status.id
+        default_values["title"] = status.title
 
     def create_status(e):
-        if status.value == '':
+        if status.value == "":
             return
 
         statusService.create(status.value)
         page.go(ADMIN_STATUS)
 
     def update_status(e):
-        statusService.update(default_values['id'], title=status.value)
+        statusService.update(default_values["id"], title=status.value)
         page.go(ADMIN_STATUS)
 
     def logout(e):
-        page.client_storage.remove('token')
+        page.client_storage.remove("token")
         page.go(LOGIN)
 
-    def on_submit(e):
-        if is_update:
-            return update_status(e)
-        return create_status(e)
-
-    status = ft.TextField(hint_text='Title',
-                          autofocus=True, on_submit=on_submit, value=default_values['title'])
+    status = ft.TextField(hint_text="Title",
+                          autofocus=True, on_submit=update_status if is_update else create_status, value=default_values["title"])
     create_btn = ft.TextButton(
-        text='Create', on_click=create_status, visible=not is_update)
+        text="Create", on_click=create_status, visible=not is_update)
     update_btn = ft.TextButton(
-        text='Update', on_click=update_status, visible=is_update)
+        text="Update", on_click=update_status, visible=is_update)
 
-    logoutbtn = ft.TextButton(text='Logout', on_click=logout)
+    logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
         text="Home", on_click=lambda e: page.go(HOME))
     adminbtn = ft.TextButton(
@@ -50,8 +45,5 @@ def admin_status_create(page: ft.Page):
 
     statusesbtn = ft.TextButton(
         text="Statuses", on_click=lambda e: page.go(ADMIN_STATUS))
-
-    return [ft.Row([logoutbtn, homebtn, adminbtn, statusesbtn]),
-            status,
-            create_btn,
-            update_btn]
+    navbar = ft.Row([logoutbtn, homebtn, adminbtn, statusesbtn])
+    return [navbar, status, create_btn, update_btn]

@@ -3,7 +3,7 @@ from dotenv import dotenv_values
 
 c = dotenv_values()
 
-db = SqliteDatabase(c['DB_NAME'])  # type: ignore
+db = SqliteDatabase(c["DB_NAME"])  # type: ignore
 
 
 class BaseModel(Model):
