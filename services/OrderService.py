@@ -10,9 +10,16 @@ class OrderService():
         self.OrderModel = Order
 
     def create(self, client: str, client_type: ClientType, contact, product_type, material_filepath, user: User, status: Status):
-        return self.OrderModel.create(client=client, client_type=client_type, contact=contact, product_type=product_type, material_filepath=material_filepath, user=user, status=status)
+        return self.OrderModel.create(client=client,
+                                      client_type=client_type,
+                                      contact=contact,
+                                      product_type=product_type,
+                                      material_filepath=material_filepath,
+                                      user=user,
+                                      status=status)
 
     def update(self, id: int, *args, **kwargs):
+
         client = kwargs.get("client", None)
         client_type = kwargs.get("client_type", None)
         contact = kwargs.get("contact", None)
@@ -38,7 +45,7 @@ class OrderService():
         if status:
             order[self.OrderModel.status] = status
 
-        self.OrderModel.update(user).where(self.OrderModel.id == id).execute()
+        self.OrderModel.update(order).where(self.OrderModel.id == id).execute()
 
     def delete(self, id: int):
         order = self.OrderModel.get_by_id(id)
