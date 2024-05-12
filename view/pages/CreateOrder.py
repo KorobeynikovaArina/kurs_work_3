@@ -38,23 +38,17 @@ def order_create(page: ft.Page):
 
     if troute.match(ORDERS_CREATE+"/:id"):
         is_update = True
-        id = troute.id
+        id = troute.id[1:]
         order = orderService.get_by_id(id)
 
         default_values["id"] = order.id
         default_values["client"] = order.client
-        default_values["client_type"] = {
-            "key": order.client_type.id,
-            "text": order.client_type.title
-        }
+        default_values["client_type"] = order.client_type
         default_values["contact"] = order.contact
         default_values["product_type"] = order.product_type
         default_values["material_filepath"] = order.material_filepath
         default_values["user"] = order.user
-        default_values["status"] = {
-            "key": order.status.id,
-            "text": order.status.title
-        }
+        default_values["status"] = order.status
 
     def logout(e):
         page.client_storage.remove("token")
@@ -70,7 +64,13 @@ def order_create(page: ft.Page):
         page.go(ORDERS)
 
     def update_order(e):
-        orderService.update()
+        uploaded_files_urls = upload_files(e)
+        materials = ','.join(uploaded_files_urls)
+        if client_input.value == "" or client_type_select.value == "" or contact_input.value == "" or product_type_input.value == "" or status_select.value == "" or materials == "":
+            return
+        orderService.update(default_values["id"], client=client_input.value, client_type=client_type_select.value, contact=contact_input.value,
+                            product_type=product_type_input.value, material_filepath=materials, user=current_user.id, status=status_select.value)
+        page.go(ORDERS)
 
     def pick_files_result(e: ft.FilePickerResultEvent):
         selected_files_text.value = (
@@ -111,7 +111,7 @@ def order_create(page: ft.Page):
         value=default_values["product_type"], hint_text="Product type", label="Product type", on_submit=on_submit)
 
     file_picker = ft.FilePicker(on_result=pick_files_result)
-    selected_files_text = ft.Text()
+    selected_files_text = ft.Text(value=default_values["material_filepath"])
     select_files_btn = ft.ElevatedButton(text="Pick materials",
                                          icon=ft.icons.UPLOAD_FILE,
                                          on_click=lambda _: file_picker.pick_files(
@@ -130,10 +130,10 @@ def order_create(page: ft.Page):
     logout_btn = ft.TextButton(text="Logout", on_click=logout)
     admin_panel = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN), visible=is_admin)
-    homebtn = ft.TextButton(
+    home_btn = ft.TextButton(
         text="Home", on_click=lambda e: page.go(ORDERS))
 
-    navbar = ft.Row([logout_btn, admin_panel, homebtn])
+    navbar = ft.Row([logout_btn, admin_panel, home_btn])
 
     page.overlay.append(file_picker)
     return [navbar,
