@@ -1,6 +1,6 @@
 import flet as ft
 
-from view.ROUTES import HOME, LOGIN
+from view.ROUTES import ORDERS, LOGIN
 from view.views import views_handler
 
 
@@ -20,4 +20,4 @@ def base_page(page: ft.Page):
     if not token:
         page.go(LOGIN)
     else:
-        page.go(HOME)
+        page.go(ORDERS)

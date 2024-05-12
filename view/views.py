@@ -2,6 +2,7 @@ import flet as ft
 from utils.RegexDict import RegexDict
 from view.ROUTES import *
 from view.pages.AdminStatusPage import admin_status_page
+from view.pages.CreateOrder import order_create
 from view.pages.CreateStatus import admin_status_create
 from view.pages.LoginPage import login_page
 from view.pages.HomePage import home_page
@@ -19,10 +20,19 @@ def views_handler(page: ft.Page):
         route=LOGIN,
         controls=login_page(page)
     )
-    d[HOME] = ft.View(
-        route=HOME,
+    d[ORDERS] = ft.View(
+        route=ORDERS,
         controls=home_page(page),
     )
+    d[ORDERS_CREATE] = ft.View(
+        route=ORDERS_CREATE,
+        controls=order_create(page),
+    )
+    d[ORDERS_CREATE + "/.*"] = ft.View(
+        route=ORDERS_CREATE,
+        controls=order_create(page),
+    )
+
     d[ADMIN] = ft.View(
         route=ADMIN,
         controls=admin_page(page),

@@ -1,4 +1,7 @@
+import os
+import shutil
 import jwt
+from models.Order import Order
 from models.User import User
 from dotenv import dotenv_values
 
@@ -14,6 +17,7 @@ class UserAllreadyExist(Exception):
 class UserService():
     def __init__(self) -> None:
         self.UserModel = User
+        self.OrderModel = Order
 
     def create(self, username, password, name, rule):
         hash_password = self._get_hashed_password(password)
@@ -73,6 +77,7 @@ class UserService():
 
     def delete(self, id: int):
         user = self.UserModel.get_by_id(id)
+        shutil.rmtree(user.upload_dir)
         user.delete_instance(recursive=True)
 
     def login(self, username, password):

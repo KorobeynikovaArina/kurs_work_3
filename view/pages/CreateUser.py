@@ -2,7 +2,7 @@ import flet as ft
 import jwt
 
 from services.UserService import UserAllreadyExist, UserService
-from view.ROUTES import ADMIN, ADMIN_USERS, ADMIN_USERS_CREATE, HOME, LOGIN
+from view.ROUTES import ADMIN, ADMIN_USERS, ADMIN_USERS_CREATE, ORDERS, LOGIN
 
 
 def admin_createuser_page(page: ft.Page):
@@ -87,7 +87,7 @@ def admin_createuser_page(page: ft.Page):
 
     logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
-        text="Home", on_click=lambda e: page.go(HOME))
+        text="Home", on_click=lambda e: page.go(ORDERS))
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
 

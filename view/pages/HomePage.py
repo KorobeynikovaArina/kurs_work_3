@@ -1,9 +1,8 @@
 import flet as ft
-import jwt
 
 from services.OrderService import OrderService
 from services.UserService import UserService
-from view.ROUTES import ADMIN, LOGIN
+from view.ROUTES import ADMIN, LOGIN, ORDERS_CREATE
 
 
 def home_page(page: ft.Page):
@@ -32,14 +31,14 @@ def home_page(page: ft.Page):
     logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     admin_panel = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN), visible=is_admin)
-
+    create_btn = ft.OutlinedButton(
+        text="Create order", on_click=lambda e: page.go(ORDERS_CREATE), icon=ft.icons.ADD, icon_color=ft.colors.GREEN_400)
     table = ft.DataTable(
         columns=[
             ft.DataColumn(ft.Text("client")),
             ft.DataColumn(ft.Text("client_type")),
             ft.DataColumn(ft.Text("contact")),
             ft.DataColumn(ft.Text("product_type")),
-            ft.DataColumn(ft.Text("material_filepath")),
             ft.DataColumn(ft.Text("user")),
             ft.DataColumn(ft.Text("status")),
         ],
@@ -47,15 +46,14 @@ def home_page(page: ft.Page):
             ft.DataRow(
                 cells=[
                     ft.DataCell(ft.Text(order.client)),
-                    ft.DataCell(ft.Text(order.client_type)),
+                    ft.DataCell(ft.Text(order.client_type.title)),
                     ft.DataCell(ft.Text(order.contact)),
                     ft.DataCell(ft.Text(order.product_type)),
-                    ft.DataCell(ft.Text(order.material_filepath)),
-                    ft.DataCell(ft.Text(order.user)),
-                    ft.DataCell(ft.Text(order.status)),
+                    ft.DataCell(ft.Text(order.user.name)),
+                    ft.DataCell(ft.Text(order.status.title)),
                 ],
             ) for order in orders
         ],
     )
-    navbar = ft.Row([logoutbtn, admin_panel])
+    navbar = ft.Row([logoutbtn, admin_panel, create_btn])
     return [navbar, tokentxt, rule, table]

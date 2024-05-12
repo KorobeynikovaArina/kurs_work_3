@@ -1,3 +1,4 @@
+import os
 from models.ClientType import ClientType
 from models.Order import Order
 from models.Status import Status
@@ -40,7 +41,14 @@ class OrderService():
         self.OrderModel.update(user).where(self.OrderModel.id == id).execute()
 
     def delete(self, id: int):
-        self.OrderModel.delete_by_id(id)
+        order = self.OrderModel.get_by_id(id)
+
+        files = order.materials.split(',')
+
+        for f in files:
+            os.remove(f)
+
+        order.delete_instance()
 
     def get_by_id(self, id: int):
         return self.OrderModel.get_by_id(id)

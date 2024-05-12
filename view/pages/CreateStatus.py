@@ -1,5 +1,5 @@
 import flet as ft
-from view.ROUTES import ADMIN, ADMIN_STATUS, ADMIN_STATUS_CREATE, HOME, LOGIN
+from view.ROUTES import ADMIN, ADMIN_STATUS, ADMIN_STATUS_CREATE, ORDERS, LOGIN
 from services.StatusService import StatusService
 
 
@@ -39,7 +39,7 @@ def admin_status_create(page: ft.Page):
 
     logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
-        text="Home", on_click=lambda e: page.go(HOME))
+        text="Home", on_click=lambda e: page.go(ORDERS))
     adminbtn = ft.TextButton(
         text="Admin panel", on_click=lambda e: page.go(ADMIN))
 

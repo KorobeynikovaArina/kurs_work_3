@@ -1,7 +1,7 @@
 import flet as ft
 
 from services.UserService import UserService
-from view.ROUTES import ADMIN, ADMIN_USERS_CREATE, HOME, LOGIN
+from view.ROUTES import ADMIN, ADMIN_USERS_CREATE, ORDERS, LOGIN
 
 
 def admin_users_page(page: ft.Page):
@@ -31,7 +31,7 @@ def admin_users_page(page: ft.Page):
 
     logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
-        text="Home", on_click=lambda e: page.go(HOME))
+        text="Home", on_click=lambda e: page.go(ORDERS))
     createbtn = ft.OutlinedButton(
         text="Create user", on_click=lambda e: page.go(ADMIN_USERS_CREATE), icon=ft.icons.ADD, icon_color=ft.colors.GREEN_400)
     adminbtn = ft.TextButton(
