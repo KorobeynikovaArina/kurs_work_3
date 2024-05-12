@@ -2,7 +2,7 @@ import flet as ft
 
 from services.OrderService import OrderService
 from services.UserService import UserService
-from view.ROUTES import ADMIN_USERS, HOME, LOGIN, ADMIN_STATUS, ADMIN_CLIENTTYPE
+from view.ROUTES import ADMIN_USERS, ORDERS, LOGIN, ADMIN_STATUS, ADMIN_CLIENTTYPE
 
 
 def admin_page(page: ft.Page):
@@ -17,7 +17,7 @@ def admin_page(page: ft.Page):
 
     logoutbtn = ft.TextButton(text="Logout", on_click=logout)
     homebtn = ft.TextButton(
-        text="Home", on_click=lambda e: page.go(HOME))
+        text="Home", on_click=lambda e: page.go(ORDERS))
 
     users_card = ft.Card(
         content=ft.Container(

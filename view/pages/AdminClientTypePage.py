@@ -1,5 +1,5 @@
 import flet as ft
-from view.ROUTES import ADMIN, ADMIN_CLIENTTYPE_CREATE, HOME, LOGIN
+from view.ROUTES import ADMIN, ADMIN_CLIENTTYPE_CREATE, ORDERS, LOGIN
 from services.ClientTypeService import ClientTypeService
 
 
@@ -24,7 +24,7 @@ def admin_clienttype_page(page: ft.Page):
     client_types = clienttypeService.get_all()
 
     logoutbtn = ft.TextButton(text="Logout", on_click=logout)
-    homebtn = ft.TextButton(text="Home", on_click=lambda e: page.go(HOME))
+    homebtn = ft.TextButton(text="Home", on_click=lambda e: page.go(ORDERS))
     createbtn = ft.OutlinedButton(text="Create client type", on_click=lambda e: page.go(
         ADMIN_CLIENTTYPE_CREATE), icon=ft.icons.ADD, icon_color=ft.colors.GREEN_400)
     adminbtn = ft.TextButton(

@@ -1,4 +1,5 @@
-HOME = r"/"
+ORDERS = r"/"
+ORDERS_CREATE = r"/create"
 LOGIN = r"/login"
 ADMIN = r"/admin"
 ADMIN_USERS = r"/admin/users"

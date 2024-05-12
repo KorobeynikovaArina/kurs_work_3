@@ -1,7 +1,7 @@
 import flet as ft
 
 from services.UserService import UserService
-from view.ROUTES import HOME
+from view.ROUTES import ORDERS
 
 
 def login_page(page: ft.Page):
@@ -18,7 +18,7 @@ def login_page(page: ft.Page):
             page.update()
             return
         page.client_storage.set("token", token)
-        page.go(HOME)
+        page.go(ORDERS)
 
     username = ft.TextField(hint_text="Username", autofocus=True)
     password = ft.TextField(hint_text="Password",
