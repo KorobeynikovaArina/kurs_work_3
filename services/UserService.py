@@ -1,4 +1,3 @@
-import os
 import shutil
 import jwt
 from models.Order import Order

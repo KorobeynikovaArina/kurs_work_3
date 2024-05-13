@@ -1,4 +1,5 @@
 from models.ClientType import ClientType
+import shutil
 
 
 class ClientTypeService():
@@ -13,8 +14,9 @@ class ClientTypeService():
             self.ClientTypeModel.id == id).execute()
 
     def delete(self, id: int):
-        self.ClientTypeModel = self.ClientTypeModel.get_by_id(id)
-        self.ClientTypeModel.delete_instance(recursive=True)
+        client_type = self.ClientTypeModel.get_by_id(id)
+        shutil.rmtree(client_type.upload_dir)
+        client_type.delete_instance(recursive=True)
 
     def get_all(self):
         return [client_type for client_type in self.ClientTypeModel.select()]

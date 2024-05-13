@@ -34,7 +34,7 @@ def order_create(page: ft.Page):
                       "product_type": "",
                       "material_filepath": "",
                       "user": current_user.id,
-                      "status": ""}
+                      "status": "", }
 
     if troute.match(ORDERS_CREATE+"/:id"):
         is_update = True
@@ -66,7 +66,7 @@ def order_create(page: ft.Page):
     def update_order(e):
         uploaded_files_urls = upload_files(e)
         materials = ','.join(uploaded_files_urls)
-        if client_input.value == "" or client_type_select.value == "" or contact_input.value == "" or product_type_input.value == "" or status_select.value == "" or materials == "":
+        if client_input.value == "" or client_type_select.value == "" or contact_input.value == "" or product_type_input.value == "" or status_select.value == "":
             return
         orderService.update(default_values["id"], client=client_input.value, client_type=client_type_select.value, contact=contact_input.value,
                             product_type=product_type_input.value, material_filepath=materials, user=current_user.id, status=status_select.value)
@@ -138,5 +138,5 @@ def order_create(page: ft.Page):
     page.overlay.append(file_picker)
     return [navbar,
             client_input, client_type_select, contact_input, product_type_input, status_select,
-            ft.Row([select_files_btn, selected_files_text]),
+            select_files_btn, selected_files_text,
             create_btn, update_btn]

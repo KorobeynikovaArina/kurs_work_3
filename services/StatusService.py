@@ -1,4 +1,5 @@
 from models.Status import Status
+import shutil
 
 
 class StatusService():
@@ -14,6 +15,7 @@ class StatusService():
 
     def delete(self, id: int):
         status = self.StatusModel.get_by_id(id)
+        shutil.rmtree(status.upload_dir)
         status.delete_instance(recursive=True)
 
     def get_all(self):
