@@ -22,7 +22,20 @@ def home_page(page: ft.Page):
     def go_edit(e):
         page.go(ORDERS_CREATE+f"/:{e.control.data}")
 
+    def on_delete(e):
+        orderService.delete(e.control.data)
+        for row in table.rows:
+            if row.data == e.control.data:
+                table.rows.remove(row)
+                page.update()
+                break
+
     orders = orderService.get_all()
+
+    current_user = userService.get_user_by_token(
+        page.client_storage.get("token"))
+    if not current_user:
+        return
 
     tokentxt = ft.Text(token)
     try:
@@ -46,6 +59,7 @@ def home_page(page: ft.Page):
             ft.DataColumn(ft.Text("user")),
             ft.DataColumn(ft.Text("status")),
             ft.DataColumn(ft.Text("Update")),
+            ft.DataColumn(ft.Text("Delete"))
         ],
         rows=[
             ft.DataRow(
@@ -59,7 +73,10 @@ def home_page(page: ft.Page):
                     ft.DataCell(ft.Text(order.status.title)),
                     ft.DataCell(ft.IconButton(
                         ft.icons.EDIT, ft.colors.GREEN, on_click=go_edit, data=order.id)),
+                    ft.DataCell(ft.IconButton(
+                        ft.icons.DELETE, ft.colors.GREY if order.user.id != current_user.id and not is_admin else ft.colors.RED, on_click=on_delete, data=order.id, disabled=order.user.id != current_user.id or not is_admin))
                 ],
+                data=order.id
             ) for order in orders
         ],
     )

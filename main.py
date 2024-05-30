@@ -1,3 +1,4 @@
+from os import path
 import flet as ft
 from models import BaseModel
 from models.ClientType import ClientType
@@ -6,6 +7,10 @@ from models.Status import Status
 from models.User import User
 from services.UserService import UserService
 from view.app import base_page
+from dotenv import dotenv_values
+from appdirs import *
+
+c = dotenv_values()
 
 
 def _create_admin():
