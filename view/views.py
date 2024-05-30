@@ -24,6 +24,7 @@ def views_handler(page: ft.Page):
         route=ORDERS,
         controls=home_page(page),
     )
+
     d[ORDERS_CREATE] = ft.View(
         route=ORDERS_CREATE,
         controls=order_create(page),
@@ -32,7 +33,10 @@ def views_handler(page: ft.Page):
         route=ORDERS_CREATE,
         controls=order_create(page),
     )
-
+    d[ORDERS+".*/.*"] = ft.View(
+        route=ORDERS,
+        controls=home_page(page),
+    )
     d[ADMIN] = ft.View(
         route=ADMIN,
         controls=admin_page(page),

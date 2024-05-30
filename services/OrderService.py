@@ -62,3 +62,6 @@ class OrderService():
 
     def get_all(self):
         return [order for order in self.OrderModel.select()]
+
+    def searchBy(self, value, by):
+        return [order for order in self.OrderModel.select().where(getattr(self.OrderModel, by) == value)]
