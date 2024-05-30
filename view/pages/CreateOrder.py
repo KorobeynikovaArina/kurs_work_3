@@ -1,4 +1,4 @@
-from os import path
+from os import makedirs, path
 import shutil
 import flet as ft
 from services.ClientTypeService import ClientTypeService
@@ -85,10 +85,11 @@ def order_create(page: ft.Page):
         if file_picker.result != None and file_picker.result.files != None:
             for f in file_picker.result.files:
                 upload_dir = current_user.upload_dir
+                if not path.exists(upload_dir):
+                    makedirs(upload_dir)
                 upload_url = path.join(upload_dir, f"{uuid.uuid4()}_{f.name}")
                 upload_list.append(upload_url)
                 shutil.copy(f.path, upload_url)
-
         return [upload_url for upload_url in upload_list]
 
     def on_submit(e):

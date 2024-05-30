@@ -50,7 +50,7 @@ class OrderService():
     def delete(self, id: int):
         order = self.OrderModel.get_by_id(id)
 
-        files = order.materials.split(',')
+        files = order.material_filepath.split(',')
 
         for f in files:
             os.remove(f)
